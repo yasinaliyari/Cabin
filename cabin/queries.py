@@ -1,5 +1,5 @@
 # from cabin.models import *
-from django.db.models import Sum, Count
+from django.db.models import Sum, Count, Q
 from cabin.models import Driver, Payment, RideRequest, Rider
 
 
@@ -47,7 +47,15 @@ def query_6():
 
 
 def query_7():
-    q = "your query here"
+    q = (
+        Rider.objects.filter(riderequest__ride__car__car_type="A")
+        .annotate(
+            n=Count(
+                "riderequest__ride", filter=Q("riderequest__ride__car__car_type") == "A"
+            )
+        )
+        .distinct()
+    )
     return q
 
 
