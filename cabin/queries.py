@@ -1,6 +1,6 @@
 # from cabin.models import *
 from django.db.models import Sum
-from cabin.models import Driver, Payment, RideRequest
+from cabin.models import Driver, Payment, RideRequest, Rider
 
 
 def query_0():
@@ -31,7 +31,9 @@ def query_4():
 
 
 def query_5(t):
-    q = "your query here"
+    q = Rider.objects.annotate(
+        total=Sum("riderequest__ride__payment__amount").filter(total__gte=t)
+    )
     return q
 
 
