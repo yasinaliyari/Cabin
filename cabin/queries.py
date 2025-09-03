@@ -1,6 +1,6 @@
 # from cabin.models import *
 from django.db.models import Sum
-from cabin.models import Driver, Payment
+from cabin.models import Driver, Payment, RideRequest
 
 
 def query_0():
@@ -26,7 +26,7 @@ def query_3():
 
 
 def query_4():
-    q = "your query here"
+    q = RideRequest.objects.filter(ride__isnull=True)
     return q
 
 
