@@ -1,5 +1,5 @@
 # from cabin.models import *
-from django.db.models import Sum
+from django.db.models import Sum, Count
 from cabin.models import Driver, Payment, RideRequest, Rider
 
 
@@ -38,7 +38,11 @@ def query_5(t):
 
 
 def query_6():
-    q = "your query here"
+    q = (
+        Driver.objects.annotate(n=Count("car"))
+        .order_by("-n", "account__last_name")
+        .first()
+    )
     return q
 
 
