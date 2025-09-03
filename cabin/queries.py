@@ -69,7 +69,12 @@ def query_9():
 
 
 def query_10():
-    q = "your query here"
+    q = (
+        Driver.objects.values("account__first_name")
+        .annotate(n=Count("car__ride"))
+        .values("account__first_name")
+        .annotate(n=Sum("n"))
+    )
     return q
 
 
