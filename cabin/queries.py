@@ -84,7 +84,13 @@ def query_11(n, c):
 
 
 def query_12(n, c):
-    q = "your query here"
+    q = (
+        Driver.objects.filter(
+            car__color=c,
+        )
+        .filter(car__model__gte=n)
+        .distinct()
+    )
     return q
 
 
