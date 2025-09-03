@@ -79,7 +79,7 @@ def query_10():
 
 
 def query_11(n, c):
-    q = "your query here"
+    q = Driver.objects.filter(car__color=c, car__model=n).distinct()
     return q
 
 
