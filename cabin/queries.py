@@ -1,5 +1,5 @@
-from django.db.models import Sum, Count, Q
-from cabin.models import Driver, Payment, RideRequest, Rider, Account
+from django.db.models import Sum, Count, Q, ExpressionWrapper, F, IntegerField
+from cabin.models import Driver, Payment, RideRequest, Rider, Account, Ride
 
 
 def query_0():
@@ -95,40 +95,13 @@ def query_12(n, c):
 
 
 def query_13(n, m):
-    q = "your query here"
-    return q
-
-
-def query_14(x, y, r):
-    q = "your query here"
-    return q
-
-
-def query_15(n, c):
-    q = "your query here"
-    return q
-
-
-def query_16(x, t):
-    q = "your query here"
-    return q
-
-
-def query_17():
-    q = "your query here"
-    return q
-
-
-def query_18():
-    q = "your query here"
-    return q
-
-
-def query_19(n, t):
-    q = "your query here"
-    return q
-
-
-def query_20():
-    q = "your query here"
+    q = Ride.objects.filter(
+        car__owner__account__first_name=n, request__rider__account__first_name=m
+    ).aggregate(
+        sum_duration=Sum(
+            ExpressionWrapper(
+                F("dropoff_time") - F("pickup_time"), output_field=IntegerField()
+            )
+        )
+    )
     return q
