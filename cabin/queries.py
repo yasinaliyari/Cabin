@@ -1,4 +1,3 @@
-# from cabin.models import *
 from django.db.models import Sum, Count, Q
 from cabin.models import Driver, Payment, RideRequest, Rider, Account
 
@@ -65,7 +64,7 @@ def query_8(x):
 
 
 def query_9():
-    q = "your query here"
+    q = Driver.objects.annotate(n=Count("car__ride"))
     return q
 
 
