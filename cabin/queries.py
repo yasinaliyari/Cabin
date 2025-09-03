@@ -14,7 +14,9 @@ def query_1():
 
 
 def query_2(x):
-    q = "your query here"
+    q = Payment.objects.filter(ride__request_rider__id=x).aggregate(
+        paynet_sum=Sum("amount")
+    )
     return q
 
 
