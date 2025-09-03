@@ -13,8 +13,8 @@ def query_1():
 
 
 def query_2(x):
-    q = Payment.objects.filter(ride__request_rider__id=x).aggregate(
-        paynet_sum=Sum("amount")
+    q = Payment.objects.filter(ride__request__rider__id=x).aggregate(
+        payment_sum=Sum("amount")
     )
     return q
 
@@ -30,8 +30,8 @@ def query_4():
 
 
 def query_5(t):
-    q = Rider.objects.annotate(
-        total=Sum("riderequest__ride__payment__amount").filter(total__gte=t)
+    q = Rider.objects.annotate(total=Sum("riderequest__ride__payment__amount")).filter(
+        total__gte=t
     )
     return q
 
@@ -49,9 +49,7 @@ def query_7():
     q = (
         Rider.objects.filter(riderequest__ride__car__car_type="A")
         .annotate(
-            n=Count(
-                "riderequest__ride", filter=Q("riderequest__ride__car__car_type") == "A"
-            )
+            n=Count("riderequest__ride", filter=Q(riderequest_ride__car__car_type="A"))
         )
         .distinct()
     )
@@ -59,7 +57,7 @@ def query_7():
 
 
 def query_8(x):
-    q = Account.objects.filter(driver__car__model__gta=x).values("email").distinct()
+    q = Account.objects.filter(driver__car__model__gte=x).values("email").distinct()
     return q
 
 
