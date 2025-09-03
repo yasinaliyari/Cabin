@@ -21,7 +21,7 @@ def query_2(x):
 
 
 def query_3():
-    q = "your query here"
+    q = Driver.objects.filter(car__car_type="A").distinct().count()
     return q
 
 
