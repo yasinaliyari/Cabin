@@ -1,6 +1,6 @@
 # from cabin.models import *
 from django.db.models import Sum, Count, Q
-from cabin.models import Driver, Payment, RideRequest, Rider
+from cabin.models import Driver, Payment, RideRequest, Rider, Account
 
 
 def query_0():
@@ -60,7 +60,7 @@ def query_7():
 
 
 def query_8(x):
-    q = "your query here"
+    q = Account.objects.filter(driver__car__model__gta=x).values("email").distinct()
     return q
 
 
